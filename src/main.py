@@ -1,3 +1,25 @@
+# src/main.py ফাইলের শুরুতে যোগ করুন
+import os
+import platform
+
+def is_cloud_environment():
+    """চেক করে কোড ক্লাউডে চলছে কিনা"""
+    cloud_indicators = [
+        'STREAMLIT_CLOUD' in os.environ,
+        'STREAMLIT_SHARING' in os.environ,
+        'STREAMLIT_RUNTIME' in os.environ,
+        'REPLIT_DB_URL' in os.environ,
+        'KOYEB_APP' in os.environ,
+        'RAILWAY_ENVIRONMENT' in os.environ
+    ]
+    return any(cloud_indicators)
+
+# প্যাকেট স্নিফার চালানোর আগে চেক করুন
+if not is_cloud_environment():
+    from src.data_collection.packet_sniffer import start_sniffing
+    start_sniffing()
+else:
+    logging.info("প্যাকেট স্নিফিং ক্লাউডে ডিজেবল করা হয়েছে")
 # to test logging
 from utils.logger import get_logger
 
